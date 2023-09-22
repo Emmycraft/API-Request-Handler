@@ -1,0 +1,10 @@
+{
+    "name": "currently staging my application",
+    "dataBase": {
+        "dataType": "json",
+        "dataContent": "product and people details"
+    },
+    "server": "localhost",
+    "defaultPort": "NODE_ENV",
+    "customPort": 3000
+}

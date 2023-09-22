@@ -1,44 +1,27 @@
 const express = require('express')
+
 const app = express()
-const { products, people } = require('./data')
+const login = require('./routes/auth')
+const userRoute = require('./routes/user')
+
+const config = require('config')
+console.log(`appEnvironment:${config.get('name')}`);
+console.log(`the port:${config.get('port')}`);
+console.log('dataContent :' + config.get('data.dataContent'));
+console.log('password:' + config.get('data.password'));
+
+const port = process.env.PORT || 3000
+console.log(port);
+const validate = require('./validate')
+const { error } = require('console')
 app.use(express.static('./methods-public'))
 app.use(express.json())
+app.use('/login', login)
+app.use('/all', userRoute)
 app.use(express.urlencoded({ extended: false }))
-app.get('/all', (req, res) => {
-    res.send(people)
-})
-app.post('/all', (req, res) => {
-        const { name } = req.body
-        if (!name) {
-            res.status(404).send('please input a name')
-        }
-        res.status(201).json('successful')
-    })
-    //getting a particular name using the query string param
-app.get('/all/data', (req, res) => {
-    const { user, limit } = req.query
-    let getSpecific = [...people]
-    if (user) {
-        getSpecific = getSpecific.filter((personData) => {
-            return personData.name.startsWith(user) || personData.name.includes(user)
-        })
 
-    }
-    if (limit) {
-        getSpecific = getSpecific.slice(0, parseInt(limit))
-    }
-    if (getSpecific.length < 1)
-    //or if(getspecific=' ') 
-    {
-        res.json({ success: false, data: 'unable to handle your request' })
-    }
-    res.status(200).send(getSpecific)
-
-
-})
-app.post('/login', (req, res) => {
-    res.json({ success: true, data: 'it has been added' })
-})
 app.listen(3000, () => {
     console.log('nice server');
 })
+
+//function that validates the put handler//

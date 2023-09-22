@@ -1,0 +1,10 @@
+{
+    "name": "Development app",
+    "data": {
+        "dataType": "json",
+        "dataContent": ["product", "peoples data"]
+    },
+    "server": "localhost",
+    "defaultPort": "NODE_ENV",
+    "customPort": 3000
+}
